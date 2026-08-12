@@ -30,12 +30,14 @@ RUN composer install --no-dev --no-interaction --prefer-dist --no-scripts
 
 COPY . .
 
+RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
     && npm ci \
     && npm run build \
     && rm -rf node_modules \
     && chmod +x docker/start.sh \
-    && mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
 ENV APP_ENV=production
