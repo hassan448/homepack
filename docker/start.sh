@@ -4,9 +4,13 @@ set -e
 cd /app
 
 echo "==> Waiting for database..."
-for i in {1..30}; do
+for i in {1..60}; do
     if php artisan migrate:status --no-interaction >/dev/null 2>&1; then
+        echo "==> Database ready."
         break
+    fi
+    if [ "$i" -eq 60 ]; then
+        echo "==> Warning: database not ready after 120s, continuing anyway..."
     fi
     sleep 2
 done
