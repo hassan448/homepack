@@ -1,34 +1,29 @@
 #!/usr/bin/env bash
-set -e
 
 cd /app
 
-echo "==> Waiting for database..."
-for i in {1..60}; do
-    if php artisan migrate:status --no-interaction >/dev/null 2>&1; then
-        echo "==> Database ready."
-        break
-    fi
-    if [ "$i" -eq 60 ]; then
-        echo "==> Warning: database not ready after 120s, continuing anyway..."
-    fi
-    sleep 2
-done
+mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
+chmod -R 775 storage bootstrap/cache 2>/dev/null || true
 
-echo "==> Running migrations..."
-php artisan migrate --force --no-interaction
+setup_database() {
+    echo "==> [setup] Waiting for database..."
+    for i in $(seq 1 45); do
+        if php artisan migrate:status --no-interaction >/dev/null 2>&1; then
+            echo "==> [setup] Database ready."
+            php artisan migrate --force --no-interaction
+            php artisan db:seed --force --no-interaction
+            php artisan storage:link --force --no-interaction 2>/dev/null || true
+            echo "==> [setup] Done."
+            return 0
+        fi
+        sleep 2
+    done
+    echo "==> [setup] Database unavailable — verify DB_CONNECTION=pgsql and DB_URL=\${{Postgres.DATABASE_URL}}"
+    return 1
+}
 
-echo "==> Seeding database..."
-php artisan db:seed --force --no-interaction
+setup_database &
 
-echo "==> Linking storage..."
-php artisan storage:link --force --no-interaction || true
-
-echo "==> Optimizing..."
-php artisan config:cache --no-interaction
-php artisan route:cache --no-interaction
-php artisan view:cache --no-interaction
-php artisan optimize --no-interaction
-
-echo "==> Starting server on port ${PORT:-10000}..."
-exec php artisan serve --host=0.0.0.0 --port="${PORT:-10000}"
+PORT="${PORT:-8080}"
+echo "==> Starting server on 0.0.0.0:${PORT}..."
+exec php artisan serve --host=0.0.0.0 --port="${PORT}"
