@@ -33,12 +33,18 @@ class AppServiceProvider extends ServiceProvider
         }
 
         View::composer(['partials.header', 'partials.footer', 'contact.index'], function ($view): void {
-            $view->with('siteSettings', SiteSetting::allCached());
-            $view->with('navPages', Cache::remember('nav_pages', 3600, fn () => Page::query()
-                ->where('is_active', true)
-                ->orderBy('sort_order')
-                ->pluck('slug')
-                ->flip()));
+            try {
+                $view->with('siteSettings', SiteSetting::allCached());
+                $view->with('navPages', Cache::remember('nav_pages', 3600, fn () => Page::query()
+                    ->where('is_active', true)
+                    ->orderBy('sort_order')
+                    ->pluck('slug')
+                    ->flip()));
+            } catch (\Throwable $e) {
+                report($e);
+                $view->with('siteSettings', collect());
+                $view->with('navPages', collect());
+            }
         });
 
         foreach ([Product::class, Category::class, Order::class, Page::class, PageSection::class] as $model) {

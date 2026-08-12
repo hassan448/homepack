@@ -4,7 +4,19 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@yield('title', 'هوم باك | تصنيع صناعي')</title>
-    @vite(['resources/css/app.css'])
+    @php
+        $manifestPath = public_path('build/manifest.json');
+        $siteCss = null;
+        if (is_file($manifestPath)) {
+            $manifest = json_decode((string) file_get_contents($manifestPath), true);
+            $siteCss = $manifest['resources/css/app.css']['file'] ?? null;
+        }
+    @endphp
+    @if ($siteCss)
+        <link rel="stylesheet" href="{{ asset('build/'.$siteCss) }}"/>
+    @elseif (app()->environment('local'))
+        @vite(['resources/css/app.css'])
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"/>

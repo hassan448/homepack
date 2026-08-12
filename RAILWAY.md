@@ -44,9 +44,9 @@ LOG_CHANNEL=stderr
 LOG_LEVEL=error
 
 DB_CONNECTION=pgsql
-DB_URL=${{Postgres.DATABASE_URL}}
+DB_URL=${{homepack-db.DATABASE_URL}}
 
-SESSION_DRIVER=database
+SESSION_DRIVER=file
 CACHE_STORE=file
 QUEUE_CONNECTION=sync
 FILESYSTEM_DISK=public
@@ -58,6 +58,17 @@ ADMIN_PASSWORD=ضع-كلمة-مرور-قوية-هنا
 
 > **ملاحظة:** إذا اسم خدمة PostgreSQL عندك مش `Postgres`، غيّر المرجع — مثلاً `${{PostgreSQL.DATABASE_URL}}`.  
 > اسمه يظهر على البطاقة في لوحة المشروع.
+
+**تحقق من هذه المتغيرات إذا فشل Healthcheck:**
+
+| المتغير | مطلوب؟ |
+|---------|--------|
+| `APP_KEY` | ✅ نعم |
+| `DB_CONNECTION=pgsql` | ✅ نعم |
+| `DB_URL=${{homepack-db.DATABASE_URL}}` | ✅ نعم — اسم خدمة PostgreSQL عندك |
+| `SESSION_DRIVER=file` | ✅ نعم — لا تستخدم `database` على Railway |
+| `APP_URL` | ✅ نعم — رابط Railway بعد Generate Domain |
+| `ADMIN_PASSWORD` | ✅ نعم |
 
 ---
 
