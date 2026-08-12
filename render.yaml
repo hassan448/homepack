@@ -1,0 +1,55 @@
+databases:
+  - name: homepack-db
+    plan: free
+    databaseName: homepack
+    user: homepack
+
+services:
+  - type: web
+    name: homepack
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /up
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeploy: true
+    envVars:
+      - key: APP_NAME
+        value: هوم باك
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        sync: false
+      - key: APP_LOCALE
+        value: ar
+      - key: APP_FALLBACK_LOCALE
+        value: ar
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: error
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        fromDatabase:
+          name: homepack-db
+          property: connectionString
+      - key: CACHE_STORE
+        value: file
+      - key: SESSION_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FILESYSTEM_DISK
+        value: public
+      - key: ADMIN_NAME
+        value: مدير النظام
+      - key: ADMIN_EMAIL
+        value: admin@homepack.com
+      - key: ADMIN_PASSWORD
+        sync: false

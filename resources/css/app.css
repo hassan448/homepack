@@ -1,0 +1,141 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Cairo', ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary: #041627;
+    --color-secondary: #f06d06;
+    --color-background: #fcf9f8;
+    --color-on-background: #1b1c1c;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #8192a7;
+    --color-on-primary-fixed: #0b1d2d;
+    --color-primary-container: #1a2b3c;
+    --color-primary-fixed: #d2e4fb;
+    --color-primary-fixed-dim: #b7c8de;
+    --color-on-secondary: #ffffff;
+    --color-on-secondary-container: #451a00;
+    --color-on-secondary-fixed: #2e0d00;
+    --color-on-secondary-fixed-variant: #5c4125;
+    --color-secondary-container: #ffdbbf;
+    --color-secondary-fixed: #ffdbbf;
+    --color-secondary-fixed-dim: #ffb68d;
+    --color-surface: #fcf9f8;
+    --color-on-surface: #1b1c1c;
+    --color-on-surface-variant: #44474c;
+    --color-surface-variant: #e4e2e1;
+    --color-surface-container: #f0eded;
+    --color-surface-container-low: #f6f3f2;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-high: #eae7e7;
+    --color-surface-container-highest: #e4e2e1;
+    --color-surface-bright: #fcf9f8;
+    --color-surface-dim: #dcd9d9;
+    --color-outline: #74777d;
+    --color-outline-variant: #c4c6cd;
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error: #ffffff;
+    --color-on-error-container: #93000a;
+    --color-tertiary: #141616;
+    --color-on-tertiary: #ffffff;
+    --color-tertiary-container: #282a2a;
+    --color-on-tertiary-container: #909191;
+    --color-tertiary-fixed: #e2e2e2;
+    --color-tertiary-fixed-dim: #c6c6c7;
+    --color-on-tertiary-fixed: #1a1c1c;
+    --color-on-tertiary-fixed-variant: #454747;
+    --color-inverse-surface: #303030;
+    --color-inverse-on-surface: #f3f0f0;
+    --color-inverse-primary: #b7c8de;
+    --color-surface-tint: #4f6073;
+
+    --spacing-margin-desktop: 64px;
+    --spacing-margin-mobile: 20px;
+    --spacing-gutter: 24px;
+    --spacing-container-max-width: 1280px;
+    --spacing-unit: 8px;
+
+    --radius-DEFAULT: 0.125rem;
+    --radius-lg: 0.25rem;
+    --radius-xl: 0.5rem;
+    --radius-full: 0.75rem;
+
+    --font-headline-lg: 'Cairo', sans-serif;
+    --font-headline-lg-mobile: 'Cairo', sans-serif;
+    --font-headline-md: 'Cairo', sans-serif;
+    --font-display-lg: 'Cairo', sans-serif;
+    --font-body-lg: 'Cairo', sans-serif;
+    --font-body-md: 'Cairo', sans-serif;
+    --font-label-md: 'Cairo', sans-serif;
+
+    --text-headline-lg: 32px;
+    --text-headline-lg--line-height: 40px;
+    --text-headline-lg--font-weight: 700;
+    --text-headline-lg-mobile: 28px;
+    --text-headline-lg-mobile--line-height: 36px;
+    --text-headline-lg-mobile--font-weight: 700;
+    --text-headline-md: 24px;
+    --text-headline-md--line-height: 32px;
+    --text-headline-md--font-weight: 600;
+    --text-display-lg: 48px;
+    --text-display-lg--line-height: 56px;
+    --text-display-lg--letter-spacing: -0.02em;
+    --text-display-lg--font-weight: 700;
+    --text-body-lg: 18px;
+    --text-body-lg--line-height: 28px;
+    --text-body-lg--font-weight: 400;
+    --text-body-md: 16px;
+    --text-body-md--line-height: 24px;
+    --text-body-md--font-weight: 400;
+    --text-label-md: 14px;
+    --text-label-md--line-height: 20px;
+    --text-label-md--letter-spacing: 0.05em;
+    --text-label-md--font-weight: 600;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+}
+
+.technical-outline {
+    border: 1px solid #E0E0E0;
+}
+
+.blueprint-bg {
+    background-image: radial-gradient(#e0e0e0 0.5px, transparent 0.5px);
+    background-size: 24px 24px;
+}
+
+.blueprint-accent {
+    background-image: radial-gradient(#E0E0E0 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+[dir="rtl"] .material-symbols-outlined {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .material-symbols-outlined.no-mirror {
+    transform: scaleX(1);
+}
+
+.product-card:hover .product-overlay {
+    opacity: 1;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.filter-btn.active {
+    background-color: #041627;
+    color: #ffffff;
+    border-color: #041627;
+}
